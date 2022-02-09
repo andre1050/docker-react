@@ -1,0 +1,19 @@
+version: "3"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules # Do not copy this folder from outside the container in.
+      - .:/app # Copy by reference all the files in this context into the /app directory inside the container.
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"] # Override the start command defined in the Dockerfile
