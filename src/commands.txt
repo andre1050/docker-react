@@ -1,17 +1,17 @@
 // Build using a custom Dockerfile.
-docker build -f Dockerfile.dev .
+docker build -t andre1050/docker-react -f Dockerfile.dev .
 
 // Run the container mapping ports and using volumes
 // to sync changes in the app files with the copies inside the container.
 // Each change made to the files in the app will be automatically copied (by reference)
 // to the container, where CRA is watching ready compile them.
-docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app 61fc4580f303
+docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app andre1050/docker-react
 
 // Run the test suite inside a fresh container.
-docker run -it c4c0771d80c5 npm run test
+docker run -it andre1050/docker-react npm run test
 
 // Run the test suite inside a running container (from a separate tab).
-docker exec -it 571ca0a88ec8 npm run test
+docker exec -it andre1050/docker-react npm run test
 
 // Run a new shell inside a container.
-docker exec -it 01f2e3ea0977 sh
+docker exec -it andre1050/docker-react sh
